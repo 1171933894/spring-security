@@ -48,6 +48,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
  *
  * @author Ben Alex
  */
+
+/**
+ * Authentication?spring security???????????Principal???Principal???java.security?????????Authentication?spring security?????????/????
+ */
 public interface Authentication extends Principal, Serializable {
 	// ~ Methods
 	// ========================================================================================================
@@ -65,6 +69,7 @@ public interface Authentication extends Principal, Serializable {
 	 * @return the authorities granted to the principal, or an empty collection if the
 	 * token has not been authenticated. Never null.
 	 */
+	// ??????????GrantedAuthority?????????????????????????
 	Collection<? extends GrantedAuthority> getAuthorities();
 
 	/**
@@ -74,7 +79,8 @@ public interface Authentication extends Principal, Serializable {
 	 *
 	 * @return the credentials that prove the identity of the <code>Principal</code>
 	 */
-	Object getCredentials();
+	// ??????????????????????????????????
+	Object getCredentials();// Credentials???
 
 	/**
 	 * Stores additional details about the authentication request. These might be an IP
@@ -83,6 +89,7 @@ public interface Authentication extends Principal, Serializable {
 	 * @return additional details about the authentication request, or <code>null</code>
 	 * if not used
 	 */
+	// ?????web??????????? WebAuthenticationDetails?????????ip???sessionId??
 	Object getDetails();
 
 	/**
@@ -98,6 +105,7 @@ public interface Authentication extends Principal, Serializable {
 	 * @return the <code>Principal</code> being authenticated or the authenticated
 	 * principal after authentication.
 	 */
+	// ??????????UserDetails???????????????????
 	Object getPrincipal();
 
 	/**

@@ -96,6 +96,7 @@ public class ProviderManager implements AuthenticationManager, MessageSourceAwar
 	// ================================================================================================
 
 	private AuthenticationEventPublisher eventPublisher = new NullEventPublisher();
+	// ????AuthenticationProvider??
 	private List<AuthenticationProvider> providers = Collections.emptyList();
 	protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
 	private AuthenticationManager parent;
@@ -160,6 +161,7 @@ public class ProviderManager implements AuthenticationManager, MessageSourceAwar
 		Authentication result = null;
 		boolean debug = logger.isDebugEnabled();
 
+		// ????
 		for (AuthenticationProvider provider : getProviders()) {
 			if (!provider.supports(toTest)) {
 				continue;
@@ -208,22 +210,26 @@ public class ProviderManager implements AuthenticationManager, MessageSourceAwar
 				lastException = e;
 			}
 		}
-
+		// ???Authentication????????
 		if (result != null) {
 			if (eraseCredentialsAfterAuthentication
 					&& (result instanceof CredentialsContainer)) {
 				// Authentication is complete. Remove credentials and other secret data
 				// from authentication
+				//????
 				((CredentialsContainer) result).eraseCredentials();
 			}
-
+			//????????
 			eventPublisher.publishAuthenticationSuccess(result);
 			return result;
 		}
 
 		// Parent was null, or didn't authenticate (or throw an exception).
-
+		//????????????????????
 		if (lastException == null) {
+			/**
+			 * ProviderManager ??List????????????????????????????null????AuthenticationProvider????????????????????????ProviderManager ?????ProviderNotFoundException???
+			 */
 			lastException = new ProviderNotFoundException(messages.getMessage(
 					"ProviderManager.providerNotFound",
 					new Object[] { toTest.getName() },
